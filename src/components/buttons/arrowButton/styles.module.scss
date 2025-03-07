@@ -1,0 +1,16 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+.container {
+    @include mixin.radiusCommon(30px);
+    background-color: variable.$bg-primary-color;
+    color: variable.$text-dark-mode;
+    padding: 15px 20px;
+    transition: gap .3s ease, font-size .3s ease;
+    font-size: variable.$default-font-size;
+    cursor: pointer;
+    @include mixin.flexCommon(row, center, space-between);
+    @include mixin.flexCustom(15px);
+    &:hover {
+        @include mixin.flexCustom(30px);
+    }
+}

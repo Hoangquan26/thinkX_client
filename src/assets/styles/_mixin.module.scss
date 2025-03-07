@@ -1,0 +1,19 @@
+@mixin flexCommon($flex-direction: row, $align-item: center, $justify-content: center) {
+    display: flex;
+    flex-direction: $flex-direction;
+    align-items: $align-item;
+    justify-content: $justify-content;
+}
+
+@mixin flexCustom($gap: 10px, $wrap: nowrap) {
+    gap: $gap;
+    flex-wrap: $wrap;
+}
+
+@mixin radiusCommon($radius: 5px) {
+    border-radius: $radius;
+}
+
+@mixin radiusRounded() {
+    border-radius: 50%;
+}

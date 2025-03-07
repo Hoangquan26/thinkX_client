@@ -11,6 +11,8 @@ export default defineConfig({
       '@pages': '/src/pages',
       '@routers':  '/src/routers',
       '@styles': '/src/assets/styles',
+      '@utils': '/src/utils',
+      '@interfaces': '/src/interfaces'
     },
   },
 })

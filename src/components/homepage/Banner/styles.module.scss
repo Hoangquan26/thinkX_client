@@ -1,0 +1,31 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+$banner-default-height: 670px;
+$banner-default-width: 100%;
+
+.container {
+    height: $banner-default-height;
+    width: $banner-default-width;
+    background-color: variable.$bg-secondary-color;
+    @include mixin.flexCommon();
+    .contentWrapper {
+        @include mixin.flexCommon(row, center, space-between);
+        @include mixin.flexCustom(10px);
+        width: variable.$container-width-large-desktop;
+
+        .contentSide,.posterSider {
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+        .contentSide {
+            flex-basis: 60%;
+            @include mixin.flexCommon(column, start, space-between);
+            @include mixin.flexCustom(15px);
+
+            .sloganText {
+                font-size: variable.$xxx-large-font-size;
+            }
+        }
+    }
+}
+

@@ -1,0 +1,19 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    padding: 20px;
+    background-color: variable.$bg-secondary-color;
+    font-weight: variable.$medium-font-weight;
+    @include mixin.flexCommon(column, start);
+    @include mixin.radiusCommon();
+    cursor: pointer;
+
+    &:hover .description {
+        transform: scale(1);
+    }
+    .description {
+        transform: scale(0);
+        transition: transform .3s ease;
+    }
+}

@@ -1,0 +1,65 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+.container {
+    font-size: variable.$default-font-size;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    @include mixin.flexCommon();
+    .contentWrapper {
+        @include mixin.flexCommon(row, center, space-between);
+        width: variable.$container-width-large-desktop;
+            //define logo side css 
+            .logoSide {
+                font-weight: variable.$bold-font-weight;
+                user-select: none;
+            }
+        
+            //define menu side css
+            .menuSide {
+                @include mixin.flexCommon(row, center, space-between);
+                @include mixin.flexCustom(20px);
+                font-weight: variable.$medium-font-weight;
+                .menuItem {
+                    cursor: pointer;
+                    user-select: none;
+                }
+
+                .menuItem::after {
+                    display: block;
+                    transform: scale(0);
+                    transform-origin: center;
+                    border-radius: 10px;
+                    width: 100%;
+                    height: 3px;
+                    background-color: variable.$bg-primary-color;
+                    content: '';
+                    transition: transform ease .3s;
+                }
+
+                .menuItem:hover {
+                    color: variable.$text-primary-color;
+                    transition: color ease .3s;
+                }
+
+                .menuItem:hover::after {
+                    transform: scale(1);
+                }
+            }
+
+            //define action side css
+            .actionSide {
+                @include mixin.flexCommon();
+                @include mixin.flexCustom(20px);
+
+                .actionItem {
+                    cursor: pointer;
+                    user-select: none;
+                    font-size: variable.$icon-default-font-size;
+                }
+            }
+    }
+}

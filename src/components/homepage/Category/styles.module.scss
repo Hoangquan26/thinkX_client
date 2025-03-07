@@ -1,0 +1,28 @@
+@use '@styles/_mixin.module.scss' as mixin;
+@use '@styles/_variable.module.scss' as variable;
+
+$default-container-width: 100%;
+
+.container {
+    width: $default-container-width;
+    padding: variable.$padding-y-section 0;
+    @include mixin.flexCommon();
+    .contentWrapper {
+        width: variable.$container-width-large-desktop;
+    
+        .title {
+            text-align: center;
+            font-size: variable.$xx-large-font-size;
+            font-weight: variable.$bold-font-weight;
+    
+            margin-bottom: variable.$margin-bottom-per-item;
+            color: variable.$text-light-mode;
+        }
+
+        .categoriesWrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+    }
+}

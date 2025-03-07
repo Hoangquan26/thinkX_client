@@ -1,3 +1,13 @@
 @use '_global.module.scss' as global;
 @use '_mixin.module.scss' as mixin;
 @use '_variable.module.scss' as variable;
+
+body {
+  background-color: variable.$bg-light-mode;
+  color: variable.$text-light-mode;
+}
+
+body.dark-mode {
+  background-color: variable.$bg-dark-mode;
+  color: variable.$text-dark-mode;
+}
