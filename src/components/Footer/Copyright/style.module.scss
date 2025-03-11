@@ -1,0 +1,11 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    @include mixin.flexCommon();
+    background-color: variable.$gray-color-1;
+    color: variable.$text-dark-mode;
+
+    padding: 20px;
+    font-weight: variable.$bold-font-weight;
+}

@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router'
 import Header from '@components/headers/Header'
 import Footer from '@components/Footer/Footer'
+import Copyright from '@components/Footer/Copyright/Copyright'
 
 export default function LayoutPage() {
   return (
@@ -9,6 +10,7 @@ export default function LayoutPage() {
         <Header/>
         <Outlet/>
         <Footer/>
+        <Copyright/>
     </>
 
   )
