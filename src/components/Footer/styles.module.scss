@@ -1,0 +1,11 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    background-color: variable.$bg-dark-mode;
+    color: variable.$text-dark-mode;
+    @include mixin.flexCommon();
+    .contentWrapper {
+        width: variable.$container-width-large-desktop
+    }
+}

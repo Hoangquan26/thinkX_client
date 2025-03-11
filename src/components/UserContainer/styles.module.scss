@@ -1,0 +1,23 @@
+@use '@styles/_mixin.module.scss' as mixin;
+@use '@styles/_variable.module.scss' as variable;
+
+.container  {
+    @include mixin.flexCommon();
+    @include mixin.flexCustom(10px);
+    .imageWrapper {
+        @include mixin.radiusRounded();
+        @include mixin.borderCommon(variable.$bg-primary-color, 2px);
+        height: 35px;
+        width: 35px;
+        overflow: hidden;
+        .image {
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .userContent {
+        font-weight: variable.$bold-font-weight;
+    }
+}

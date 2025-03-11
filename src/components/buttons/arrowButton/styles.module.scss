@@ -13,4 +13,8 @@
     &:hover {
         @include mixin.flexCustom(30px);
     }
+
+    .circle {
+        @include mixin.radiusRounded()
+    }
 }

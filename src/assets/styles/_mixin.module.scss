@@ -17,3 +17,7 @@
 @mixin radiusRounded() {
     border-radius: 50%;
 }
+
+@mixin borderCommon($color: #ccc, $width: 1px, $style: solid) {
+    border: $width $style $color;
+}

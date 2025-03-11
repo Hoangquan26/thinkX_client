@@ -2,18 +2,27 @@
 @use '@styles/_mixin.module.scss' as mixin;
 
 .container {
-    padding: 20px;
+    padding: 20px 40px;
     background-color: variable.$bg-secondary-color;
     font-weight: variable.$medium-font-weight;
-    @include mixin.flexCommon(column, start);
+    @include mixin.flexCommon(row, center, start);
+    @include mixin.flexCustom(15px);
     @include mixin.radiusCommon();
     cursor: pointer;
 
-    &:hover .description {
-        transform: scale(1);
+    transition: transform ease .3s;
+    &:hover {
+        transform: scale(1.05);
     }
-    .description {
-        transform: scale(0);
-        transition: transform .3s ease;
+
+    .title {
+        font-weight: variable.$bold-font-weight;
+    }
+
+    .thumb {
+        height: 40px;
+        width: 40px;
+        object-fit: cover;
+        object-position: center;
     }
 }
