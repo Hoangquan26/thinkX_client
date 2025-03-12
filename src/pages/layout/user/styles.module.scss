@@ -1,0 +1,10 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    display: block;
+    width: 100%;
+    padding: variable.$padding-y-section variable.$padding-x-section;
+    color: variable.$text-dark-mode;
+    background-color: variable.$bg-dark-mode;
+}
