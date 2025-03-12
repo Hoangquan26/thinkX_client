@@ -2,10 +2,77 @@
 @use '@styles/_mixin.module.scss' as mixin;
 
 .container {
+    padding: variable.$padding-y-section;
+    padding-bottom: variable.$padding-bottom-section;
     background-color: variable.$bg-dark-mode;
     color: variable.$text-dark-mode;
     @include mixin.flexCommon();
     .contentWrapper {
-        width: variable.$container-width-large-desktop
+        @include mixin.flexCommon();
+        @include mixin.flexCustom(40px);
+        width: variable.$container-width-large-desktop;  
+
+        .websiteInfo, .linkWrapper {
+            @include mixin.flexCommon(column, start, start);
+            @include mixin.flexCustom();
+            flex: 50% 1 1;
+        }
+
+        .websiteInfo {
+            .socialWrapper {
+                @include mixin.flexCommon(row, start, start);
+                @include mixin.flexCustom();
+
+                .socialItem {
+                    @include mixin.radiusRounded();
+                    @include mixin.flexCommon();
+                    font-size: variable.$medium-font-size;
+                    color: variable.$text-primary-color;
+                    background-color: variable.$bg-purple-color;
+                    height: 30px;
+                    width: 30px;
+                }
+            }
+        }
+
+        .linkWrapper {
+            @include mixin.flexCommon(row, start, start);
+            @include mixin.flexCustom();
+            .linkSide {
+                flex: 50% 1 1;
+                @include mixin.flexCommon(column, start, start);
+                @include mixin.flexCustom(5px);
+                .linkTitle {
+                    margin-bottom: 5px
+                }
+
+                .linkItem {
+                    @include mixin.flexCommon(row, center, start);
+                    @include mixin.flexCustom();
+                    transition: color ease .3s, transform ease .3s;
+                }
+
+                .linkItem::before {
+                    display: block;
+                    height: 5px;
+                    width: 5px;
+                    background-color: transparent;
+                    content: '';
+                    border: 3px solid variable.$text-dark-mode;
+                    border-bottom: 0;
+                    border-left: 0;
+                    transition: color ease .3s, transform ease .3s;
+                }
+
+                .linkItem:hover, .linkItem:hover::before {
+                    color: variable.$bg-primary-color;
+                    transform: translateX(-5px);
+                }
+                .linkItem:hover::before {
+                    border-color: variable.$bg-primary-color;
+                    transform: rotate(35deg);
+                }
+            }
+        }
     }
 }

@@ -5,17 +5,18 @@
     @include mixin.flexCommon(column, start, start);
     @include mixin.flexCustom(10px);
     @include mixin.radiusCommon(10px);
-    border: 1px dashed variable.$bg-primary-color;
+    border: 1px solid rgba($color: variable.$bg-primary-color, $alpha: .1);
     // background-color: variable.$bg-purple-color;
     overflow: hidden;
     padding: 15px;
     padding-bottom: 20px;
     cursor: pointer;
     transition: box-shadow ease .3s, transform ease .3s;
-    background-color: rgba($color: variable.$bg-purple-color, $alpha: .7);
+    background-color: rgba($color: variable.$bg-purple-color, $alpha: 1);
     &:hover {
         transform: translateY(-5px);
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        background-color: rgba($color: variable.$bg-purple-color, $alpha: 0.1);
     }
 
     &:hover .imageWrapper .image {
