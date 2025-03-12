@@ -31,6 +31,7 @@
                     background-color: variable.$bg-purple-color;
                     height: 30px;
                     width: 30px;
+                    user-select: none;
                 }
             }
         }
@@ -50,6 +51,7 @@
                     @include mixin.flexCommon(row, center, start);
                     @include mixin.flexCustom();
                     transition: color ease .3s, transform ease .3s;
+                    user-select: none;
                 }
 
                 .linkItem::before {
