@@ -7,4 +7,9 @@
     padding: variable.$padding-y-section variable.$padding-x-section;
     color: variable.$text-dark-mode;
     background-color: variable.$bg-dark-mode;
+    @include mixin.flexCommon(row, center, center);
+    .title {
+        text-align: center;
+        font-size: variable.$xx-large-font-size;
+    }
 }

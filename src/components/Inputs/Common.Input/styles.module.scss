@@ -1,0 +1,52 @@
+@use '@styles/_mixin.module.scss' as mixin;
+@use '@styles/_variable.module.scss' as variable;
+
+
+
+.container {
+    @include mixin.flexCommon(column-reverse, start, start);
+    @include mixin.flexCustom(5px);
+    width: 100%;
+    .placeHolder {
+        color: rgba(variable.$gray-color-3, 0.8);
+        transition: color 0.3s ease;
+    }
+    &.error .mainInput{
+        @include mixin.borderCommon(variable.$red-color, 2px);
+    }
+    .mainInput {
+        @include mixin.radiusCommon(5px);
+        @include mixin.borderCommon(rgba(variable.$gray-color-4, 0.4), 2px);
+        @include mixin.shadowCommon();
+        width: 100%;
+        padding: 10px;
+        outline: none;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+        &:focus {
+            @include mixin.shadowFocus();
+            @include mixin.borderCommon(variable.$bg-dark-mode, 2px);
+        }
+
+        &:focus + .desContainer .placeHolder {
+            color: variable.$text-light-mode;
+        }
+    }
+
+    .desContainer {
+        cursor: pointer;
+        @include mixin.flexCommon(row, center, space-between);
+        width: 100%;
+        color: rgba(variable.$gray-color-3, 0.8);
+        transition: color 0.3s ease;
+        &:hover {
+            color: variable.$text-light-mode;
+        }
+
+        .hideBtn{
+            @include mixin.flexCommon(row, center, start);
+            @include mixin.flexCustom(5px);
+            user-select: none;
+        }
+    }
+}

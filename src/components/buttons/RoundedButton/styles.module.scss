@@ -1,0 +1,48 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    @include mixin.radiusCommon(40px);
+    @include mixin.borderCommon(variable.$text-light-mode);
+    @include mixin.flexCommon(row, center, center);
+    width: 100%;
+    padding: 10px 20px;
+    @include mixin.shadowCommon();
+    cursor: pointer;
+    user-select: none;
+    transition: box-shadow ease .3s, background-color ease .3s, color ease .3s;
+
+   
+
+    &.primary {
+        background-color: variable.$bg-dark-mode;
+        @include mixin.borderCommon(variable.$bg-dark-mode);
+        color: variable.$text-dark-mode;
+    } 
+
+    &.primary:hover {
+        color: variable.$text-light-mode;
+        background-color: transparent;
+    }
+    
+    &.disabled,  &.primary.disabled{
+        background-color: variable.$gray-color-4;
+        @include mixin.borderCommon(variable.$gray-color-4);
+        cursor: not-allowed;
+        color: variable.$text-dark-mode;
+
+        pointer-events: none;
+    }
+
+    &:hover:not(.disabled,.primary) {
+        @include mixin.shadowFocus();
+        background-color: variable.$bg-dark-mode;
+        color: variable.$text-dark-mode;
+
+    }
+
+    .contentWrapper {
+        margin-left: 10px;
+    }
+}
+

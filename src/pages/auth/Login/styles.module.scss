@@ -1,0 +1,47 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    @include mixin.flexCommon(row, center, center);
+    .contentWrapper {
+        width: variable.$container-width-tablet;
+        padding: variable.$padding-y-section;
+        .title {
+            text-align: center;
+            font-weight: variable.$medium-font-weight;
+            font-size: variable.$x-large-font-size;
+            margin-bottom: variable.$margin-bottom-per-item;
+        }
+
+        .actionWrapper {
+            @include mixin.flexCommon(column, center, start);
+            @include mixin.flexCustom();
+            margin-bottom: variable.$margin-bottom-per-item;
+        }        
+
+        .mainGroup {
+            @include mixin.flexCommon(column, center, start);
+            @include mixin.flexCustom(15px);
+        }
+
+
+        .forgotPasswordWrapper {
+            width: 100%;
+            @include mixin.flexCommon(row, center, end);
+            a {
+                color: variable.$text-light-mode;
+                font-size: variable.$tiny-font-size;
+                font-weight: variable.$medium-font-weight;
+                text-decoration: underline;
+            }
+        }
+
+        .errorLabel {
+            color: variable.$red-color;
+            font-size: variable.$tiny-font-size;
+            text-align: left;
+            width: 100%;
+            margin-top: -10px;
+        }       
+    }
+}

@@ -1,7 +1,7 @@
 import styles from './styles.module.scss'
 import { FaArrowRight } from "react-icons/fa";
 export default function ArrowButton({content, props, url}: {content: string, props?: any, url?: string}) {
-  const { container, iconWrapper, contentWrapper, circle } = styles
+  const { container, contentWrapper, circle } = styles
   return (
     <button className={container} {...props}>
       <span className={contentWrapper}>
