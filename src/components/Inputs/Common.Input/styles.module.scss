@@ -12,11 +12,11 @@
         transition: color 0.3s ease;
     }
     &.error .mainInput{
-        @include mixin.borderCommon(variable.$red-color, 2px);
+        @include mixin.borderCommon(variable.$red-color, 1px);
     }
     .mainInput {
         @include mixin.radiusCommon(5px);
-        @include mixin.borderCommon(rgba(variable.$gray-color-4, 0.4), 2px);
+        @include mixin.borderCommon(rgba(variable.$gray-color-4, 0.4), 1px);
         @include mixin.shadowCommon();
         width: 100%;
         padding: 10px;
@@ -25,7 +25,7 @@
 
         &:focus {
             @include mixin.shadowFocus();
-            @include mixin.borderCommon(variable.$bg-dark-mode, 2px);
+            @include mixin.borderCommon(variable.$bg-dark-mode, 1px);
         }
 
         &:focus + .desContainer .placeHolder {

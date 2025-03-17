@@ -6,5 +6,6 @@ export const loginValidatorSchema = Yup.object().shape({
 
 export type loginSchema = {
     email: string,
-    password: string
+    password: string,
+    isRemember: boolean
 }
