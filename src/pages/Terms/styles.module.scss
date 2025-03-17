@@ -9,7 +9,15 @@
 
         .title {
             font-weight: variable.$medium-font-weight;
-            font-size: variable.$large-font-size;
+            font-size: variable.$medium-font-size;
+            background-color: variable.$bg-dark-mode;
+            color: variable.$text-dark-mode;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .mainContent {
+            margin-left: 10px;
         }
     }
 }
