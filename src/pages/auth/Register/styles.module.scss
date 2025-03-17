@@ -1,0 +1,56 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    @include mixin.flexCommon();
+    margin: variable.$margin-bottom-per-item 0;
+    .contentWrapper {
+        width: variable.$container-width-tablet;
+        @include mixin.flexCommon(column, center, start);
+        @include mixin.flexCustom(variable.$margin-bottom-per-item);
+        .titleContainer {
+            color: variable.$text-light-mode;
+            .title {
+                font-size: variable.$x-large-font-size;
+            }
+            .loginLink{
+                font-size: variable.$default-font-size;
+            }
+        }
+
+        .formContainer {
+            @include mixin.flexCommon(column, start, start);
+            @include mixin.flexCustom(15px);
+
+            width: 100%;
+
+            .termWrapper {
+                @include mixin.flexCommon();
+                @include mixin.flexCustom();
+                margin-top: variable.$margin-bottom-per-item;
+            }
+        }
+
+        .socialContainer {
+            @include mixin.flexCommon(column, center, start);
+            @include mixin.flexCustom(15px);
+            width: 100%;
+            
+            h3 {
+                font-weight: variable.$medium-font-weight;
+                color: variable.$gray-color-1;
+            }
+            .socialWrapper {
+                @include mixin.flexCommon(row, center, space-between);
+                @include mixin.flexCustom(15px);
+                width: 100% ;
+
+            }
+        }
+    }
+
+}
+
+a {
+    text-decoration: underline
+}

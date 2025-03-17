@@ -1,0 +1,9 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    @include mixin.flexCommon(row, center, center);
+    .containerWrapper {
+        width: variable.$container-width-tablet;
+    }
+}

@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import ErrorLabel from '@/components/ErrorLabel/ErrorLabel';
 
 export default function LoginPage() {
   const { container, contentWrapper, actionWrapper, mainGroup, moreGroup, moreTitle,
@@ -49,7 +50,7 @@ export default function LoginPage() {
             onBlur={formik.handleBlur}
           />
           {formik.touched.email && formik.errors.email ? (
-            <span className={errorLabel}>{formik.errors.email}</span>
+            <ErrorLabel content={formik.errors.email}/>
           ) : null}
           <CommonInput
             label='Password'
@@ -62,7 +63,7 @@ export default function LoginPage() {
             canHide={true}
           />
           {formik.touched.password && formik.errors.password ? (
-            <span className={errorLabel}>{formik.errors.password}</span>
+            <ErrorLabel content={formik.errors.password}/>
           ) : null}
 
           <div className={forgotPasswordWrapper}>

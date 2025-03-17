@@ -1,0 +1,9 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+.errorLabel {
+    color: variable.$red-color;
+    font-size: variable.$tiny-font-size;
+    text-align: left;
+    width: 100%;
+    margin-top: -10px;
+}  
