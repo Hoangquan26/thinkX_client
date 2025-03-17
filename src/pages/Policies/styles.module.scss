@@ -3,7 +3,14 @@
 
 .container {
     @include mixin.flexCommon(column, center, start);
+
     .containerWrapper {
         width: variable.$container-width-tablet;
+        margin: variable.$margin-bottom-per-item 0;
+
+        .title {
+            font-weight: variable.$medium-font-weight;
+            font-size: variable.$large-font-size;
+        }
     }
 }

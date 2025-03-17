@@ -8,7 +8,7 @@ export default function Policies() {
         <div className={containerWrapper}>
           <h2 className={title}>Privacy Policy</h2>
           <div className={mainContent}>
-            <Accordion type="single" collapsible>
+            <Accordion type="multiple" >
               <AccordionItem value="item-1">
                 <AccordionTrigger>Data Usage</AccordionTrigger>
                 <AccordionContent>
@@ -37,7 +37,7 @@ export default function Policies() {
         <div className={containerWrapper}>
           <h2 className={title}>Refund Policy</h2>
           <div className={mainContent}>
-            <Accordion type="single" collapsible>
+            <Accordion type="multiple" >
               <AccordionItem value="item-1">
                 <AccordionTrigger>Eligibility</AccordionTrigger>
                 <AccordionContent>
@@ -59,7 +59,7 @@ export default function Policies() {
         <div className={containerWrapper}>
           <h2 className={title}>Community Guidelines</h2>
           <div className={mainContent}>
-            <Accordion type="single" collapsible>
+            <Accordion type="multiple" >
               <AccordionItem value="item-1">
                 <AccordionHeader>
                     Be respectful to all users and instructors.

@@ -7,7 +7,7 @@ export default function Terms() {
       <div className={containerWrapper}>
         <h2 className={title}>Terms and Conditions</h2>
         <div className={mainContent}>
-          <Accordion type="single" collapsible>
+          <Accordion type="multiple" >
             <AccordionItem value="item-1">
               <AccordionTrigger>Acceptance of Terms</AccordionTrigger>
               <AccordionContent>
