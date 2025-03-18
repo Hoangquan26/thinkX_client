@@ -9,7 +9,7 @@ import Terms from "@/pages/Terms/Terms";
 import Policies from "@/pages/Policies/Policies";
 import { routerConfig } from "@/configs/router.config";
 import AuthAdmin from "@/components/AuthAdmin/AuthAdmin";
-import PersistantLogin from "@/components/PersistantLogin/PersistantLogin";
+import PersistantLogin from "@/middlewares/PersistantLogin/PersistantLogin";
 import UserProfile from "@/pages/user/UserProfile/UserProfile";
 import CartPage from "@/pages/user/Cart/CartPage";
 import ChangePasswordPage from "@/pages/user/ChangePassword/ChangePassword.Page";
