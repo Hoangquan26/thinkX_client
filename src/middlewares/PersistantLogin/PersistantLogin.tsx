@@ -3,33 +3,40 @@ import { selectAuthentication } from "@/store/features/auth/auth.slice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router";
+import { AppDispatch } from "@/store/store";
 
 export default function PersistantLogin() {
-    const accessToken = useSelector(selectAuthentication)
-    const dispatch = useDispatch()
-    const refresh = useRefreshToken()                                                                       
-    const [loading, setLoading] = useState(true)
+    const accessToken = useSelector(selectAuthentication);
+    const dispatch = useDispatch<AppDispatch>();
+    const refresh = useRefreshToken();
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        let isMounted = true
-        const verifyUser = async() => {
+        let isMounted = true;
+        const verifyUser = async () => {
             try {
-                const verifyUser = await refresh()
+                await refresh();
+            } catch (err) {
+                console.log(err);
+            } finally {
+                if (isMounted) setLoading(false);
             }
-            catch (err){
-                console.log(err)
-            }
-            finally {
-                isMounted && setLoading(false)
-            }               
+        };
+
+        if (!accessToken) {
+            verifyUser();
+        } else {
+            setLoading(false);
         }
-        !accessToken ? verifyUser () : setLoading(false)
-        return () => isMounted = false
-    }, [])
+
+        return () => {
+            isMounted = false;
+        };
+    }, [accessToken, refresh]);
+
     return (
         <>
-            {
-                loading ? 'Loading...' : <Outlet/>
-            }
+            {loading ? 'Loading...' : <Outlet />}
         </>
-    )
+    );
 }

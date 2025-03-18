@@ -1,4 +1,5 @@
-import { API_ENDPOINT, privateApi } from "@/configs/api.config"
+import { API_ENDPOINT } from "@/common/constants/api.constant"
+import { privateApi } from "@/configs/api.config"
 import { useDispatch, useSelector } from "react-redux"
 
 export default async function useRefreshToken() {

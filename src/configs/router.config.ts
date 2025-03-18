@@ -6,7 +6,6 @@ export const routerConfig = {
     userPolicy: '/policies',
     course: '/courses',
     
-
     admin: {
         path: '/admin',
         childrens: {
@@ -15,6 +14,7 @@ export const routerConfig = {
         }
 
     },
+    
     authenticate: {
         course: {
             learning: '/learning',

@@ -1,15 +1,6 @@
 import axios from 'axios'
 import { HEADER_CONFIG } from './headers.config'
 
-export const API_ENDPOINT = {
-    auth: {
-        login: '',
-        register: '',
-        refreshToken: '',
-        logout: ''
-    }
-}
-
 // Config default api
 export const BASE_URL = "localhost:3000"
 export const TIMEOUT = 10000
