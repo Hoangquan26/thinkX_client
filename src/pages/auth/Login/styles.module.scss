@@ -5,7 +5,7 @@
     @include mixin.flexCommon(row, center, center);
     .contentWrapper {
         width: variable.$container-width-tablet;
-        padding: variable.$padding-y-section;
+        padding: variable.$padding-y-section 0;
         .title {
             text-align: center;
             font-weight: variable.$medium-font-weight;

@@ -9,10 +9,11 @@ import { Separator } from '@/components/ui/separator';
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import ErrorLabel from '@/components/ErrorLabel/ErrorLabel';
+import { LoginConst } from './constants/Login.contants';
 
 export default function LoginPage() {
   const { container, contentWrapper, actionWrapper, mainGroup, moreGroup, moreTitle,
-    forgotPasswordWrapper, errorLabel, rememberWrapper, seperator, seperatorWrapper, seperatorTitle } = styles;
+    forgotPasswordWrapper, rememberWrapper, seperator, seperatorWrapper, seperatorTitle } = styles;
 
   const formik = useFormik({
     initialValues: {
@@ -32,17 +33,17 @@ export default function LoginPage() {
       <div className={contentWrapper}>
         {/* BUTTON GROUP */}
         <div className={actionWrapper}>
-          <RoundedButton icon={<FcGoogle/>} content='Continue with Google' />
-          <RoundedButton icon={<FaFacebook className=' text-[#0165E1]'/>} content='Continue with Facebook' />
+          <RoundedButton icon={<FcGoogle/>} content={LoginConst.actionWrapper.loginWithGoogle.eng} />
+          <RoundedButton icon={<FaFacebook className=' text-[#0165E1]'/>} content={LoginConst.actionWrapper.loginWithFacebook.eng} />
         </div>
         <div className={seperatorWrapper}>
           <Separator className={seperator}/>
-          <h4 className={seperatorTitle}>OR</h4>
+          <h4 className={seperatorTitle}>{LoginConst.seperator.eng}</h4>
         </div>
         {/* LOGIN GROUP */}
         <form onSubmit={formik.handleSubmit} className={mainGroup}>
           <CommonInput
-            label='Email'
+            label={LoginConst.mainForm.email.eng}
             name='email'
             id='email'
             value={formik.values.email}
@@ -53,7 +54,7 @@ export default function LoginPage() {
             <ErrorLabel content={formik.errors.email}/>
           ) : null}
           <CommonInput
-            label='Password'
+            label={LoginConst.mainForm.password.eng}
             name='password'
             id='password'
             type='password'
@@ -67,7 +68,7 @@ export default function LoginPage() {
           ) : null}
 
           <div className={forgotPasswordWrapper}>
-            <Link to={'/'}>Forget your password</Link>
+            <Link to={'/'}>{LoginConst.mainForm.forgetPassword.eng}</Link>
           </div>
           
           <div className={rememberWrapper}>
@@ -83,17 +84,21 @@ export default function LoginPage() {
                 htmlFor="isRemember"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Rememeber login
+                {LoginConst.mainForm.isRemeber.eng}
               </label>
             </div>
           </div>
 
-          <RoundedButton isPrimary={true} isDisabled={ !formik.isValid || formik.isSubmitting} content='Login' />
+          <RoundedButton  
+            type="submit" isPrimary={true} 
+            isDisabled={  !formik.isValid || formik.isSubmitting || !Object.keys(formik.touched).length} 
+            content={LoginConst.mainForm.submitBtn.eng} />
+          
         </form>
         <Separator className={seperator}/>
         {/* ANOTHER ACTION GROUP */}
         <div className={moreGroup}>
-          <h2 className={moreTitle}>Don't have an account</h2>
+          <h2 className={moreTitle}>Don't have an account?</h2>
           <RoundedButton content='Sign up' />
         </div>
       </div>

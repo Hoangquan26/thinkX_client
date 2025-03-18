@@ -9,13 +9,14 @@ import { Separator } from "@/components/ui/separator";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import ErrorLabel from "@/components/ErrorLabel/ErrorLabel";
+import { RegisterConst } from "./constants/Register.constant";
 export default function RegisterPage() {
   const { 
     container, contentWrapper, 
     titleContainer, title, 
     formContainer, 
     socialContainer, socialWrapper, 
-    errorLabel, termWrapper, loginLink,
+    termWrapper, loginLink,
     
   } = styles
   const formik = useFormik({
@@ -31,20 +32,19 @@ export default function RegisterPage() {
     }
   });
 
-
   return (
     <div className={container}>
       <div className={contentWrapper}>
           {/* Title container */}
           <div className={titleContainer}>
-            <h2 className={title}>Create an account</h2>
-            <p className={loginLink}>Already have an account? <Link to={'/login'}>Log in</Link></p>
+            <h2 className={title}>{RegisterConst.others.title.eng}</h2>
+            <p className={loginLink}>{RegisterConst.others.alreadyHaveAccount.eng} <Link to={'/login'}>{RegisterConst.others.redirectLogin.eng}</Link></p>
           </div>
 
           {/* Main form container */}
           <div className={formContainer}>
             <CommonInput
-              label='Email'
+              label={RegisterConst.mainForm.email.eng}
               name='email'
               id='email'
               value={formik.values.email}
@@ -56,12 +56,12 @@ export default function RegisterPage() {
             ) : null}
 
             <CommonInput
-              label='Password'
+              label={RegisterConst.mainForm.password.eng}
               name='password'
               id='password'
               type='password'
               value={formik.values.password}
-              onChange={formik.handleChange}
+              onChange={formik.handleChange}  
               onBlur={formik.handleBlur}
               canHide={true}
             />
@@ -69,7 +69,7 @@ export default function RegisterPage() {
                 <ErrorLabel content={formik.errors.password}/>
               ) : null}
             <CommonInput
-              label='Confirm password'
+              label={RegisterConst.mainForm.confirmPassword.eng}
               name='confirmPassword'
               id='confirmPassword'
               type='confirmPassword'
@@ -95,22 +95,24 @@ export default function RegisterPage() {
                   htmlFor="isRemember"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  By creating an accont, you agree to the <Link to={'/'}>Terms</Link> and <Link to={'/'}>Policty</Link>
+                  {RegisterConst.mainForm.isAcceptTerm.eng}
                 </label>
               </div>
             </div>
 
-            <RoundedButton isPrimary={true} isDisabled={ !formik.isValid || formik.isSubmitting} content="Create an account"/>
+            <RoundedButton type="submit" isPrimary={true} isDisabled={ !formik.isValid || formik.isSubmitting || !Object.keys(formik.touched).length} 
+              content={RegisterConst.mainForm.submitBtn.eng}
+            />
           </div>
           
           <Separator/>
 
           {/* Signup by socials container */}
           <div className={socialContainer}>
-            <h3>OR CONTINUE WITH</h3>
+            <h3>{RegisterConst.seperator.eng}</h3>
             <div className={socialWrapper}>
-              <RoundedButton icon={<FcGoogle/>} content="Google"/>
-              <RoundedButton icon={<FaFacebook className=' text-[#0165E1]'/>} content="Facebook"/>
+              <RoundedButton icon={<FcGoogle/>} content={RegisterConst.actionWrapper.registerWithGoogle.eng}/>
+              <RoundedButton icon={<FaFacebook className=' text-[#0165E1]'/>} content={RegisterConst.actionWrapper.registerWithFacebook.eng}/>
             </div>
           </div>
       </div>
