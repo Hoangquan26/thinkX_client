@@ -27,7 +27,7 @@
                     @include mixin.radiusRounded();
                     @include mixin.flexCommon();
                     font-size: variable.$medium-font-size;
-                    color: variable.$text-primary-color;
+                    color: variable.$text-light-mode;
                     background-color: variable.$bg-purple-color;
                     height: 30px;
                     width: 30px;

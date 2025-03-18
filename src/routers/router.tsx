@@ -7,10 +7,17 @@ import LayoutPage from "../pages/layout/Layout.Page";
 import LayoutUser from "@/pages/layout/user/Layout.User";
 import Terms from "@/pages/Terms/Terms";
 import Policies from "@/pages/Policies/Policies";
+import { routerConfig } from "@/configs/router.config";
+import AuthAdmin from "@/components/AuthAdmin/AuthAdmin";
+import PersistantLogin from "@/components/PersistantLogin/PersistantLogin";
+import UserProfile from "@/pages/user/UserProfile/UserProfile";
+import CartPage from "@/pages/user/Cart/CartPage";
+import ChangePasswordPage from "@/pages/user/ChangePassword/ChangePassword.Page";
+import CheckoutPage from "@/pages/user/Checkout/Checkout.Page";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: routerConfig.homePage,
     element: <LayoutPage/>,
     children: [
       {
@@ -22,30 +29,53 @@ export const router = createBrowserRouter([
         element: <LayoutUser/>,
         children: [
           {
-            path: "/login",
+            path: routerConfig.login,
             element: <LoginPage />,
             
           },
           {
-            path: "/register",
+            path: routerConfig.register,
             element: <RegisterPage />
           },
           {
-            path: "/terms",
+            path: routerConfig.terms,
             element: <Terms />,
             
           },
           {
-            path: "/policies",
+            path: routerConfig.userPolicy,
             element: <Policies />
+          },
+        ]
+      },
+      {
+        path: '/',
+        element: <PersistantLogin/>,
+        children: [
+          {
+            path: routerConfig.admin.path,
+            element: <AuthAdmin/>,
+          
+          },
+          {
+            path: routerConfig.authenticate.user.userProfile,
+            element: <UserProfile/>
+          },
+          {
+            path: routerConfig.authenticate.user.carts,
+            element: <CartPage/>
+          },
+          {
+            path: routerConfig.authenticate.user.changePassword,
+            element: <ChangePasswordPage/>
+          },
+          {
+            path: routerConfig.authenticate.user.checkout,
+            element: <CheckoutPage/>
           },
         ]
       }
     ]
-  },
-
-  {
-    path: "/admin",
   },
 
   {
