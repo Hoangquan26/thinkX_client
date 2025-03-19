@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/',
-        element: <PersistantLogin/>,
+        element: <LayoutUser/>,
         children: [
           {
             path: routerConfig.admin.path,
