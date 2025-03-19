@@ -2,8 +2,17 @@
 @use '@styles/_mixin.module.scss' as mixin;
 .container {
     @include mixin.flexCommon();
-
+    margin: variable.$margin-bottom-per-section 0;
     .contentWrapper {
         width: variable.$container-width-large-desktop;
+        .tableWrapper {
+            margin: variable.$margin-bottom-per-item 0;
+        }
+        .checkoutWrapper {
+            .totalWrapper {
+                @include mixin.flexCommon(column, start, start);
+                @include mixin.flexCustom();
+            }
+        }
     }
 }
