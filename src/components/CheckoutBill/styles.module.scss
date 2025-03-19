@@ -1,0 +1,13 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    .title {
+        font-size: variable.$large-font-size;
+        font-weight: variable.$x-bold-font-weight;
+    }
+    .contentWrapper {
+        @include mixin.flexCommon(column, start, start);
+
+    }
+}

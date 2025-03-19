@@ -1,0 +1,10 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+.container {
+    @include mixin.flexCommon();
+    .contentWrapper {
+        width: variable.$container-width-large-desktop;
+        @include mixin.flexCommon();
+
+    }
+}
