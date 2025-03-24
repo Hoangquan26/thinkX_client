@@ -1,13 +1,73 @@
 @use '@styles/_variable.module.scss' as variable;
 @use '@styles/_mixin.module.scss' as mixin;
 
-.container {
-    .title {
-        font-size: variable.$large-font-size;
-        font-weight: variable.$x-bold-font-weight;
-    }
-    .contentWrapper {
-        @include mixin.flexCommon(column, start, start);
+$gray-checkout-bg: #f6f7f9;
 
+.contentWrapper {
+    @include mixin.flexCommon(row, normal, space-between);
+    width: variable.$container-width-large-desktop;
+}
+
+h2, h3, h4 {
+    font-weight: variable.$bold-font-weight;
+    margin: 10px 0;
+}
+
+h2 {
+    font-size: variable.$large-font-size;
+}
+
+.detailSide {
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding: variable.$padding-y-section;
+    background-color: #fff;
+    width: 60%;
+
+    .paymentWrapper {
+        .paymentWrapper__headear {
+            @include mixin.flexCommon(row, center, space-between);
+
+        }
+
+        .accordion {
+            .accordion_trigger {
+                cursor: pointer;
+                @include mixin.borderCommon(rgba(0, 0, 0, 0.1));
+                background-color: $gray-checkout-bg;
+                padding: 15px 25px;
+            }
+            .accordion_content {
+                background-color: #fff;
+                padding: 10px 25px;
+
+            }
+        }
     }
+}
+
+.checkoutRow {
+    @include mixin.flexCommon(row, center, space-between);
+    @include mixin.flexCustom();
+
+}
+.checkoutSide {
+    padding: 50px variable.$padding-x-section;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: $gray-checkout-bg;
+    width: 40%;
+}
+
+.checkoutRow {
+    font-size: variable.$tiny-font-size;
+    margin: 10px 0;
+}
+
+.checkoutRow.defaultRow {
+    font-size: variable.$default-font-size;
+}
+
+.marginItem {
+    margin: variable.$margin-bottom-per-item 0;
 }

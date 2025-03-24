@@ -1,40 +1,80 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
+import classNames from 'classnames'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
+import { Label } from '../ui/label'
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
+import { Separator } from '../ui/separator'
 import styles from './styles.module.scss'
+import { FaLock } from "react-icons/fa"
+import { Button } from '../ui/button'
 export default function CheckoutBill() {
-  const { container, title, contentWrapper } = styles
+  const { 
+    contentWrapper, detailSide, checkoutSide, paymentWrapper, paymentWrapper__headear, checkoutRow, 
+    accordion, accordion_content, accordion_trigger, defaultRow, marginItem } = styles
   return (
-    <div className={container}>
-        <h3 className={title}>Your order</h3>
-        <div className={contentWrapper}>
-            <Table className={' border p-6 rounded-md'}>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Product</TableHead>
-                        <TableHead>Total</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {/* start render product from cart */}
-                    <TableRow>
-                        <TableCell>Vestibulum suscipit × 1</TableCell>
-                        <TableCell>$165.00</TableCell>
-                    </TableRow>
-                    {/* end render product from cart */}
-                    <TableRow>
-                        <TableCell>Sub total</TableCell>
-                        <TableCell>$165.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Total</TableCell>
-                        <TableCell><h4>$165.00</h4></TableCell>
-                    </TableRow>
+    <div className={contentWrapper}>
+        <div className={detailSide}>
+            <h2>Checkout</h2>
+            <div className={paymentWrapper}>
+                <div className={paymentWrapper__headear}>
+                    <h3>Payment method</h3>
+                    <span className={checkoutRow}>Secure and encrypted <FaLock/></span>
+                </div>
+                <RadioGroup defaultValue="comfortable">
+                    <Accordion className={accordion} type="single" collapsible>
+                        <AccordionItem value="card">
+                            <AccordionTrigger className={accordion_trigger}>
+                                <div className="flex items-center space-x-2">
+                                    <RadioGroupItem value="default" id="r1" />
+                                    <Label htmlFor="r1">Card</Label>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className={accordion_content}>
+                                Yes. It adheres to the WAI-ARIA design pattern.
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
 
-                    <TableRow>
-                        <TableCell>Total</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
+                    <Accordion className={accordion} type="single" collapsible>
+                        <AccordionItem value="momo">
+                            <AccordionTrigger className={accordion_trigger}>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="comfortable" id="r2" />
+                                <Label htmlFor="r2">Momo</Label>
+                            </div>
+                            </AccordionTrigger>
+                            <AccordionContent className={accordion_content}>
+                            Yes. It adheres to the WAI-ARIA design pattern.
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                
+                </RadioGroup>
+            </div>
         </div>
+
+        <div className={checkoutSide}>
+            <h2>Order summary</h2>
+
+            <div className={checkoutRow}>
+                <span>Original price: </span>
+                <span>₫1,499,000</span>
+            </div>
+            <div className={checkoutRow}>
+                <span>Discounts (80% Off): </span>
+                <span>₫1,499,000</span>
+            </div> 
+
+            <Separator/>
+
+            <div className={classNames(checkoutRow, defaultRow)}>
+                <h4>Total (1 course): </h4>
+                <h4>₫299,000</h4>
+            </div> 
+
+            <div className={marginItem}></div>
+            <Button className='w-full cursor-pointer' variant={'default'}>Pay ₫299,000</Button>
+        </div>
+
     </div>
   )
 }

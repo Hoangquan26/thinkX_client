@@ -1,10 +1,13 @@
 @use '@styles/_variable.module.scss' as variable;
 @use '@styles/_mixin.module.scss' as mixin;
+$gray-checkout-bg: #f6f7f9;
+
 .container {
     @include mixin.flexCommon();
+    background: linear-gradient(90deg, transparent 60%, $gray-checkout-bg 40%);
+
     .contentWrapper {
         width: variable.$container-width-large-desktop;
         @include mixin.flexCommon();
-
     }
 }
