@@ -10,6 +10,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import ErrorLabel from '@/components/ErrorLabel/ErrorLabel';
 import { LoginConst } from './constants/Login.contants';
+import AuthService from '@/services/auth.service';
 
 export default function LoginPage() {
   const { container, contentWrapper, actionWrapper, mainGroup, moreGroup, moreTitle,
@@ -22,12 +23,14 @@ export default function LoginPage() {
       isRemember: false
     },
     validationSchema: loginValidatorSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async(values) => {
+      console.log('---submit value::: ', values)
+      const {email, password} = values
+      const response = await AuthService.login({email, password})
+      console.log(response)
     }
   });
 
-  console.log(formik.values)
   return (
     <div className={container}>
       <div className={contentWrapper}>
