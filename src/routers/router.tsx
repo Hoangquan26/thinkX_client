@@ -14,6 +14,7 @@ import UserProfile from "@/pages/user/UserProfile/UserProfile";
 import CartPage from "@/pages/user/Cart/CartPage";
 import ChangePasswordPage from "@/pages/user/ChangePassword/ChangePassword.Page";
 import CheckoutPage from "@/pages/user/Checkout/Checkout.Page";
+import Course from "@/pages/course/Course";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
             path: routerConfig.userPolicy,
             element: <Policies />
           },
+          {
+            path: routerConfig.course,
+            element: <Course/>
+          }
         ]
       },
       {

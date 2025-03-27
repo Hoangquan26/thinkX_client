@@ -9,5 +9,6 @@ export interface ICourseModel{
     courseAuthorName: string,
     courseCategoryName: string,
     courseRating: number,
-    _id: string
+    _id: string,
+    courseSlug?: string,
 }
