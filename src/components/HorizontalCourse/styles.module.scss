@@ -1,0 +1,38 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    @include mixin.flexCommon(row, center, start);
+    @include mixin.flexCustom(10px);
+    width: 100%;
+    .imageWrapper {
+        flex-basis: 33.3%;
+        overflow: hidden;
+        max-width: 200px;
+        aspect-ratio: 16/9;
+
+        img {
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .infoWrapper {
+        flex-grow: 1;
+        h3 {
+            font-size: variable.$default-font-size;
+            font-weight: variable.$medium-font-weight;
+        }
+        h4 {
+            font-size: variable.$tiny-font-size;
+        }
+        h5 {
+            font-size: variable.$x-tiny-font-size;
+        }
+    }
+
+    .functionWrapper {
+        @include mixin.flexCommon(column, center, center);
+        @include mixin.flexCustom();
+    }
+}

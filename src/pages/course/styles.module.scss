@@ -1,0 +1,47 @@
+@use '@styles/_variable.module.scss' as variable;
+@use '@styles/_mixin.module.scss' as mixin;
+
+.container {
+    @include mixin.flexCommon();
+    .contentWrapper {
+        margin-top: variable.$margin-bottom-per-section;
+        width: variable.$container-width-large-desktop;
+        @include mixin.flexCommon(column, start, start);
+        @include mixin.flexCustom(20px);
+        .functionContent {
+
+        }
+
+        .mainContent {
+            @include mixin.flexCommon(row, start, start);
+            @include mixin.flexCustom(20px);
+            width: 100%;
+            .courseContainer {
+                flex-grow: 0;
+                transition: width 0.3s ease;
+                width: 75%;
+                @include mixin.flexCommon(column, start, start);
+                @include mixin.flexCustom();
+            }
+            .filterWrapper {
+                max-width: 25%;
+                flex-shrink: 0;
+                flex-basis: 25%;
+                .filterTitle {
+                    font-size: variable.$default-font-size;
+                    cursor: pointer;
+                }
+                transform: translateX(-1500px);
+                transition: transform 0.5s ease;
+            }
+            .filterWrapper.isOpenFilter {
+                transform: translateX(0);
+
+            }
+            .filterWrapper:not(.isOpenFilter) + .courseContainer {
+                width: 100%;
+                flex-grow: 1;
+            }
+        }
+    }
+}

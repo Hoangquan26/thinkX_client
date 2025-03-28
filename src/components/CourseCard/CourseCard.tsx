@@ -2,10 +2,9 @@ import { ICourseModel } from '../../interfaces/models/course-model.interface'
 import { getStarString } from '../../interfaces/models/rating.interface'
 import { IoMdTime } from "react-icons/io";
 import { TiDocumentText } from "react-icons/ti";
-import { FaRegUser } from "react-icons/fa6";
 import styles from './styles.module.scss'
-import UserContainer from '@components/UserContainer/UserContainer';
-import ArrowButton from '@components/buttons/arrowButton/ArrowButton';
+import UserContainer from '@/components/UserContainer/UserContainer';
+import ArrowButton from '@/components/buttons/arrowButton/ArrowButton';
 export default function CourseCard({data, props}: {data: ICourseModel, props: any}) {
   const { container, actionWrapper, imageWrapper, image, mainDesWrapper, secondDesWrapper, rating, title, price, lessonWrapper, lessonLengthWrapper, studentCountWrapper } = styles
   return (
