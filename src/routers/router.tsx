@@ -15,6 +15,7 @@ import CartPage from "@/pages/user/Cart/CartPage";
 import ChangePasswordPage from "@/pages/user/ChangePassword/ChangePassword.Page";
 import CheckoutPage from "@/pages/user/Checkout/Checkout.Page";
 import Course from "@/pages/course/Course";
+import CourseDetail from "@/pages/CourseDetail/CourseDetail";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
           {
             path: routerConfig.course,
             element: <Course/>
+          },  
+          {
+            path: routerConfig.courseDetail,
+            element: <CourseDetail/>
           }
         ]
       },

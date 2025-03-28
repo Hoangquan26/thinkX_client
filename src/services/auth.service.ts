@@ -5,7 +5,7 @@ import ISuccessResponse from '@/interfaces/ISuccessResponse'
 
 //initial dto
 type loginDTO = {email: String, password: String}
-type registerDTO = {email: String, password: String, username: String}
+type registerDTO = {email: String, password: String}
 
 const AuthService  = {
 
@@ -14,8 +14,8 @@ const AuthService  = {
         return await defaultApi.post(BASE_URL + ENDPOINT.v1.login, {email, password})
     },
 
-    register: async({email, password, username}: registerDTO): Promise<ISuccessResponse> => {
-        return await defaultApi.post(BASE_URL + ENDPOINT.v1.register, {email, password, username})
+    register: async({email, password}: registerDTO): Promise<ISuccessResponse> => {
+        return await defaultApi.post(BASE_URL + ENDPOINT.v1.register, {email, password})
     },
     
     logout: async() => {

@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 export const signupValidator = Yup.object().shape({
     email: Yup.string().required('Email is required').matches(EMAIL_RULE, EMAIL_RULE_MESSAGE),
     password: Yup.string().required('Password is required').matches(PASSWORD_RULE, PASSWORD_RULE_MESSAGE),
-    username: Yup.string().required('Username is required').matches(USERNAME_RULE, USERNAME_RULE_MESSAGE) ,
     confirmPassword: Yup.string().min(6)
         .oneOf([Yup.ref('password')], 'Passwords must match')
         .required('Confirm Password is required'),

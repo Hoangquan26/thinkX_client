@@ -5,6 +5,8 @@ export const routerConfig = {
     terms: '/terms',
     userPolicy: '/policies',
     course: '/courses',
+    courseDetail: '/courses/:id',
+
     
     admin: {
         path: '/admin',

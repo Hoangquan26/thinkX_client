@@ -31,15 +31,14 @@ export default function RegisterPage() {
   const formik = useFormik({
     initialValues: {
       email: '',     
-      username: '',
       password: '',
       confirmPassword: '',
       acceptTerm: false
     },
     validationSchema: signupValidator,
     onSubmit: async(values) => {
-      const { email, password, username } = values;
-      const response = await AuthService.register({ email, password, username });    
+      const { email, password } = values;
+      const response = await AuthService.register({ email, password });    
       if (response?.status === StatusCodes.CREATED) {
         const message = response.message ?? "Success";
         SuccessToast(message);
@@ -50,6 +49,7 @@ export default function RegisterPage() {
       } }
     });
 
+  console.log(formik)
   return (
     <div className={container}>
       <div className={contentWrapper}>
@@ -71,18 +71,6 @@ export default function RegisterPage() {
             />
             {formik.touched.email && formik.errors.email ? (
               <ErrorLabel content={formik.errors.email}/>
-            ) : null}
-
-            <CommonInput
-              label={RegisterConst.mainForm.username.eng}
-              name='username'
-              id='username'
-              value={formik.values.username}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.username && formik.errors.username ? (
-              <ErrorLabel content={formik.errors.username}/>
             ) : null}
 
             <CommonInput
