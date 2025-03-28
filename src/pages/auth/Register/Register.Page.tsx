@@ -1,7 +1,7 @@
 import { signupValidator } from "@/common/validators/signup.validator.schema";
 import { useFormik } from "formik";
 import styles from './styles.module.scss'
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import CommonInput from "@/components/Inputs/Common.Input/Common.Input";
 import { Checkbox } from "@/components/ui/checkbox";
 import RoundedButton from "@/components/buttons/RoundedButton/RoundedButton";
@@ -10,6 +10,11 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import ErrorLabel from "@/components/ErrorLabel/ErrorLabel";
 import { RegisterConst } from "./constants/Register.constant";
+import AuthService from "@/services/auth.service";
+import { StatusCodes } from "@/common/statusCodes/httpStatusCode";
+import { useDispatch } from "react-redux";
+import { ErrorToast, SuccessToast } from "@/utils/toastify.util";
+import { routerConfig } from "@/configs/router.config";
 export default function RegisterPage() {
   const { 
     container, contentWrapper, 
@@ -19,18 +24,31 @@ export default function RegisterPage() {
     termWrapper, loginLink,
     
   } = styles
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const formik = useFormik({
     initialValues: {
-      email: '',
+      email: '',     
+      username: '',
       password: '',
       confirmPassword: '',
       acceptTerm: false
     },
     validationSchema: signupValidator,
-    onSubmit: (values) => {
-      console.log(values);
-    }
-  });
+    onSubmit: async(values) => {
+      const { email, password, username } = values;
+      const response = await AuthService.register({ email, password, username });    
+      if (response?.status === StatusCodes.CREATED) {
+        const message = response.message ?? "Success";
+        SuccessToast(message);
+  
+        setTimeout(() => {
+          navigate(routerConfig.login);
+        }, 3000);  
+      } }
+    });
 
   return (
     <div className={container}>
@@ -42,7 +60,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Main form container */}
-          <div className={formContainer}>
+          <form onSubmit={formik.handleSubmit} className={formContainer}>
             <CommonInput
               label={RegisterConst.mainForm.email.eng}
               name='email'
@@ -53,6 +71,18 @@ export default function RegisterPage() {
             />
             {formik.touched.email && formik.errors.email ? (
               <ErrorLabel content={formik.errors.email}/>
+            ) : null}
+
+            <CommonInput
+              label={RegisterConst.mainForm.username.eng}
+              name='username'
+              id='username'
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.touched.username && formik.errors.username ? (
+              <ErrorLabel content={formik.errors.username}/>
             ) : null}
 
             <CommonInput
@@ -84,26 +114,30 @@ export default function RegisterPage() {
 
             <div className={termWrapper}>
               <Checkbox 
-              name='isRemember'
-              id='isRemember'
-              value={'formik.values.isRemember'}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              name='acceptTerm'
+              id='acceptTerm'
+              checked={formik.values.acceptTerm}
+              onCheckedChange={(checked) => {
+                formik.setFieldValue("acceptTerm", checked);
+              }}
               />
               <div className="grid gap-1.5 leading-none">
                 <label
-                  htmlFor="isRemember"
+                  htmlFor="acceptTerm"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {RegisterConst.mainForm.isAcceptTerm.eng}
                 </label>
               </div>
             </div>
+            {formik.touched.acceptTerm && formik.errors.acceptTerm ? (
+              <ErrorLabel content={formik.errors.acceptTerm}/>
+            ) : null}
 
             <RoundedButton type="submit" isPrimary={true} isDisabled={ !formik.isValid || formik.isSubmitting || !Object.keys(formik.touched).length} 
               content={RegisterConst.mainForm.submitBtn.eng}
             />
-          </div>
+          </form>
           
           <Separator/>
 

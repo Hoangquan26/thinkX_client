@@ -23,9 +23,9 @@ privateApi.interceptors.response.use((privateApi) => (privateApi.data))
 
 export const ENDPOINT = {
     v1: {
-        login: '/v1/api/login',
-        register: '/v1/api/register',
-        logout: '/v1/api/logout',
-        refreshToken: '/v1/api/refreshToken',
+        login: '/v1/auth/login',
+        register: '/v1/auth/register',
+        logout: '/v1/auth/logout',
+        refreshToken: '/v1/auth/refreshToken',
     }
 }

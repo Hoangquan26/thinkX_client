@@ -10,11 +10,11 @@ import { store } from '@/store/store.ts'
 import { ToastContainer } from 'react-toastify'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router}>
-      <Provider store={store}>
-          <ToastContainer />
+    <Provider store={store}>
+      <ToastContainer />
+      <RouterProvider router={router}>
           <App />
-      </Provider>
-    </RouterProvider>
+      </RouterProvider>
+    </Provider>
   </StrictMode>,
 )

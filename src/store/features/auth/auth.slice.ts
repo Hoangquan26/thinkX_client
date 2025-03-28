@@ -2,15 +2,17 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store/store"; // Adjust the import path as necessary
 
 export interface IUserState {
-    userId: string,
-    authentication: string,
-    roles: string[]
+    userId: string | null,
+    authentication: string | null,
+    roles: string[],
+    email?: string | null
 }
 
 const initialState: IUserState = {
     userId: "",
     authentication: "",
-    roles: []
+    roles: [],
+    email: ""
 }
 
 // create Slice
@@ -19,15 +21,17 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         clearState: (state) => {
-            state.authentication = ''
-            state.userId = ''
+            state.authentication = null
+            state.userId = null
             state.roles = []
+            state.email = null
         },
 
         setAuth: (state, action: PayloadAction<IUserState>) => {
             state.authentication = action.payload.authentication
             state.roles = action.payload.roles
             state.userId = action.payload.userId
+            state.email = action.payload.email
         }
     }
 })

@@ -1,14 +1,21 @@
 import {defaultApi} from '@/api/api'
 import {privateApi} from '@/api/api'
 import { BASE_URL, ENDPOINT } from '@/configs/api.config'
+import ISuccessResponse from '@/interfaces/ISuccessResponse'
+
+//initial dto
+type loginDTO = {email: String, password: String}
+type registerDTO = {email: String, password: String, username: String}
 
 const AuthService  = {
-    login: async({email, password}: {email: String, password: String}) => {
+
+    //initial service
+    login: async({email, password}: loginDTO): Promise<ISuccessResponse> => {
         return await defaultApi.post(BASE_URL + ENDPOINT.v1.login, {email, password})
     },
 
-    register: async({email, password}: {email: String, password: String}) => {
-        return await defaultApi.post(BASE_URL + ENDPOINT.v1.register, {email, password})
+    register: async({email, password, username}: registerDTO): Promise<ISuccessResponse> => {
+        return await defaultApi.post(BASE_URL + ENDPOINT.v1.register, {email, password, username})
     },
     
     logout: async() => {

@@ -11,8 +11,17 @@ import { FcGoogle } from "react-icons/fc";
 import ErrorLabel from '@/components/ErrorLabel/ErrorLabel';
 import { LoginConst } from './constants/Login.contants';
 import AuthService from '@/services/auth.service';
+import { StatusCodes } from '@/common/statusCodes/httpStatusCode';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '@/store/features/auth/auth.slice';
+import ISuccessResponse from '@/interfaces/ISuccessResponse';
+import { toast } from 'react-toastify';
+import { routerConfig } from '@/configs/router.config';
+import { SuccessToast } from '@/utils/toastify.util';
 
 export default function LoginPage() {
+  const dispatch = useDispatch()
+
   const { container, contentWrapper, actionWrapper, mainGroup, moreGroup, moreTitle,
     forgotPasswordWrapper, rememberWrapper, seperator, seperatorWrapper, seperatorTitle } = styles;
 
@@ -24,10 +33,21 @@ export default function LoginPage() {
     },
     validationSchema: loginValidatorSchema,
     onSubmit: async(values) => {
-      console.log('---submit value::: ', values)
       const {email, password} = values
       const response = await AuthService.login({email, password})
-      console.log(response)
+      if(response.status == StatusCodes.OK) {
+        //set user state
+        const {_id: userId, role: roles, email} = response?.metadata?.user
+        const { accessToken } = response?.metadata?.tokens
+        const message = response.message
+        dispatch(setAuth({
+          userId, roles, email, authentication: accessToken
+        }))
+        //show toast
+        SuccessToast(message)
+
+        //navigate to home
+      }
     }
   });
 
@@ -102,7 +122,7 @@ export default function LoginPage() {
         {/* ANOTHER ACTION GROUP */}
         <div className={moreGroup}>
           <h2 className={moreTitle}>Don't have an account?</h2>
-          <RoundedButton content='Sign up' />
+          <Link to={routerConfig.register}><RoundedButton content='Sign up' /></Link>
         </div>
       </div>
     </div>

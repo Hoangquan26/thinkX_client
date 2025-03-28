@@ -9,6 +9,7 @@ interface IRegisterConst {
     seperator : LanguageObject,
     mainForm: {
         email: LanguageObject,
+        username: LanguageObject,
         password: LanguageObject,
         confirmPassword: LanguageObject,
         isAcceptTerm: LanguageObject,
@@ -64,6 +65,10 @@ export const RegisterConst: IRegisterConst = {
         email: {
             eng: "Email",
             vn: "Email"
+        },
+        username: {
+            eng: "Username",
+            vn: "Tên người dùng"
         },
         password: {
             eng: "Password",

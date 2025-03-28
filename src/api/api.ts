@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { store } from "@/store/store";
 import { setAuth, clearState } from "@/store/features/auth/auth.slice";
 import AuthService from "@/services/auth.service";
+import { ErrorToast } from "@/utils/toastify.util";
 
 defaultApi.interceptors.request.use((configs) => {
     const state = store.getState();
@@ -19,7 +20,7 @@ defaultApi.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-        if (error.response.status === StatusCodes.UNAUTHORIZED && !originalRequest._retry) {
+        if (error.response.status === StatusCodes.GONE && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
                 const newToken = await AuthService.refreshToken();
@@ -27,17 +28,13 @@ defaultApi.interceptors.response.use(
                 return defaultApi(originalRequest);
             } catch (refreshError) {
                 store.dispatch(clearState());
-                toast("Session expired. Please log in again.", {
-                    autoClose: 3000,
-                    theme: "dark"
-                });
+                const message = "Session expired! Please login again"
+                ErrorToast(message)
             }
         } else if (error.response.status > 299) {
-            const message = error.response.data?.error?.message ?? error.response.statusText;
-            toast(message, {
-                autoClose: 3000,
-                theme: "dark"
-            });
+            const message = error.response.data?.message ?? error.response.statusText;
+            console.log(message)
+            ErrorToast(message)
         }
         return Promise.reject(error);
     }

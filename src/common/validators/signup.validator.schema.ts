@@ -1,8 +1,10 @@
+import { EMAIL_RULE, EMAIL_RULE_MESSAGE, PASSWORD_RULE, PASSWORD_RULE_MESSAGE, USERNAME_RULE, USERNAME_RULE_MESSAGE } from '@/utils/validators';
 import * as Yup from 'yup';
 
 export const signupValidator = Yup.object().shape({
-    email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    email: Yup.string().required('Email is required').matches(EMAIL_RULE, EMAIL_RULE_MESSAGE),
+    password: Yup.string().required('Password is required').matches(PASSWORD_RULE, PASSWORD_RULE_MESSAGE),
+    username: Yup.string().required('Username is required').matches(USERNAME_RULE, USERNAME_RULE_MESSAGE) ,
     confirmPassword: Yup.string().min(6)
         .oneOf([Yup.ref('password')], 'Passwords must match')
         .required('Confirm Password is required'),
