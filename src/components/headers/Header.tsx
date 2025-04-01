@@ -1,5 +1,6 @@
 import styles from './styles.module.scss'
 import { menuActions, menuItems } from './constants/menuItem.constant'
+import { SidebarTrigger } from '../ui/sidebar'
 export default function Header() {
   const { container, menuSide, logoSide, menuItem, contentWrapper, actionSide, actionItem} = styles
   return (

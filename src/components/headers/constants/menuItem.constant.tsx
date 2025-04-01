@@ -1,6 +1,7 @@
 import { IoSearchOutline } from "react-icons/io5";
 import { IoMenuOutline } from "react-icons/io5";
-import { LanguageObject } from "@interfaces/language-object.interface";
+import { LanguageObject } from "@/interfaces/language-object.interface";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 // define interfaces
 export interface MenuItem {
@@ -60,6 +61,6 @@ export const menuActions: MenuAction[] = [
         logo: <IoSearchOutline/>
     },
     {
-        logo: <IoMenuOutline/>
+        logo:  <SidebarTrigger ><div><IoMenuOutline/></div></SidebarTrigger> 
     }
 ]
