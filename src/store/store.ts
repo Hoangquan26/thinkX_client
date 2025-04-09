@@ -1,5 +1,9 @@
+//import redux-toolkit
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducers } from "./features/auth/auth.slice";
+
+//import redux-persist
+import { combineReducers } from "redux";
 
 export const store = configureStore({
     reducer: {

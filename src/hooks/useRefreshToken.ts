@@ -1,9 +1,7 @@
 import { API_ENDPOINT } from "@/common/constants/api.constant"
 import { privateApi } from "@/configs/api.config"
-import { useDispatch, useSelector } from "react-redux"
 
-export default async function useRefreshToken() {
-    const dispatch = useDispatch()
+export default function useRefreshToken() {
     const refreshToken = async() => {
         const response = await privateApi.post(API_ENDPOINT.auth.refreshToken)
         // const accessToken = response.metadata.tokens.accessToken

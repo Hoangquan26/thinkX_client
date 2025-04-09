@@ -1,3 +1,4 @@
+
 export const routerConfig = {
     homePage: '',
     login: '/login',
@@ -11,8 +12,12 @@ export const routerConfig = {
     admin: {
         path: '/admin',
         childrens: {
-            courseManager: '/course',
+            fullLayout: {
 
+            },
+            blankLayout: {
+                login: 'login'
+            }
         }
 
     },
