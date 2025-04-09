@@ -103,7 +103,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route path={routerConfig.admin.path}>
+        {/* <Route path={routerConfig.admin.path}>
           <Route path='/' element={<FullLayout/>}>
 
           </Route>
@@ -112,7 +112,7 @@ function App() {
           <Route path='/' element={<BlankLayout/>}>
               <Route path={routerConfig.admin.childrens.blankLayout.login} element={<AdminLogin/>}></Route>
           </Route>
-        </Route>
+        </Route> */}
 
         <Route path='*' element={<NotFoundPage/>}></Route>
       </Routes>
