@@ -29,7 +29,6 @@ const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
 
 // Dashboard
-const Dashboard = Loadable(lazy(() => import('../views/dashboards/Dashboard')));
 
 // utilities
 const Typography = Loadable(lazy(() => import('../views/typography/Typography')));
@@ -76,6 +75,8 @@ const Router = [
 */
 
 // admin section
+const AdminDashboard = Loadable(lazy(() => import('@/admin/views/dashboards/Dashboard')));
+
 const AdminLogin = Loadable(lazy(() => import('@/admin/views/auth/login/Login')));
 
 function App() {
@@ -103,16 +104,17 @@ function App() {
           </Route>
         </Route>
 
-        {/* <Route path={routerConfig.admin.path}>
-          <Route path='/' element={<FullLayout/>}>
-
+        <Route path={routerConfig.admin.path}>
+          <Route path='' element={<FullLayout/>}>
+            <Route index element={<AdminDashboard/>}></Route>
           </Route>
 
-
-          <Route path='/' element={<BlankLayout/>}>
-              <Route path={routerConfig.admin.childrens.blankLayout.login} element={<AdminLogin/>}></Route>
+          <Route path='' element={<BlankLayout/>}>
+            <Route path={routerConfig.admin.childrens.blankLayout.login} element={<AdminLogin/>}></Route>          
           </Route>
-        </Route> */}
+
+          
+        </Route> 
 
         <Route path='*' element={<NotFoundPage/>}></Route>
       </Routes>

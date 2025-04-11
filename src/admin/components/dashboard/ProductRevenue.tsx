@@ -2,10 +2,10 @@
 import { Badge } from "flowbite-react";
 import { Table } from "flowbite-react";
 
-import product1 from "/src/assets/images/products/dash-prd-1.jpg";
-import product2 from "/src/assets/images/products/dash-prd-2.jpg";
-import product3 from "/src/assets/images/products/dash-prd-3.jpg";
-import product4 from "/src/assets/images/products/dash-prd-4.jpg";
+import product1 from "@/admin/assets/images/products/dash-prd-1.jpg";
+import product2 from "@/admin/assets/images/products/dash-prd-2.jpg";
+import product3 from "@/admin/assets/images/products/dash-prd-3.jpg";
+import product4 from "@/admin/assets/images/products/dash-prd-4.jpg";
 import SimpleBar from "simplebar-react";
 
 

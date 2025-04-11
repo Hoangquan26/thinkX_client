@@ -12,7 +12,7 @@ const FullLayout: FC = () => {
     <div className="flex w-full min-h-screen dark:bg-darkgray">
       <div className="page-wrapper flex w-full  ">
         {/* Header/sidebar */}
-            <Sidebar /> 
+        <Sidebar /> 
         <div className="page-wrapper-sub flex flex-col w-full dark:bg-darkgray">
           {/* Top Header  */}
            <Header/>

@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
-import BlogCards from 'src/components/dashboard/BlogCards';
-import DailyActivity from 'src/components/dashboard/DailyActivity';
-import NewCustomers from 'src/components/dashboard/NewCustomers';
-import ProductRevenue from 'src/components/dashboard/ProductRevenue';
-import { RevenueForecast } from 'src/components/dashboard/RevenueForecast';
-import TotalIncome from 'src/components/dashboard/TotalIncome';
+import BlogCards from '@/admin/components/dashboard/BlogCards';
+import DailyActivity from '@/admin/components/dashboard/DailyActivity';
+import NewCustomers from '@/admin/components/dashboard/NewCustomers';
+import ProductRevenue from '@/admin/components/dashboard/ProductRevenue';
+import { RevenueForecast } from '@/admin/components/dashboard/RevenueForecast';
+import TotalIncome from '@/admin/components/dashboard/TotalIncome';
 
 const Dashboard = () => {
   return (
