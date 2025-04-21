@@ -2,30 +2,27 @@ import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
-    SidebarGroup,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarTrigger,
   } from "@/components/ui/sidebar"
-import { selectAuth } from "@/store/features/auth/auth.slice"
-import { useSelector } from "react-redux"
 import { sidebarConstant } from "./constants/sidebarConstants"
 import { Link } from "react-router"
 
 import styles from './styles.module.scss'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { ChevronUp, User2 } from "lucide-react"
+import { useAuth } from "@/hooks/useAuth"
 
   export function AppSidebar() {
     const { container } = styles
 
     
-    const authUser = useSelector(selectAuth)
-    const isLoged = authUser.authentication
+    const { isLoggedIn } = useAuth()
     return (
-      <Sidebar className={container} side="right" variant="sidebar">
+    <Sidebar className={container} side="right" variant="sidebar">
         <SidebarHeader>
           <div className=" flex items-center gap-4">
             <SidebarTrigger></SidebarTrigger>
@@ -35,7 +32,7 @@ import { ChevronUp, User2 } from "lucide-react"
         </SidebarContent>
         <SidebarFooter >
           {
-            !isLoged ? 
+            !isLoggedIn ? 
             <>
               <SidebarMenu>
                 <SidebarMenuItem >

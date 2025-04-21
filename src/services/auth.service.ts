@@ -7,11 +7,10 @@ import ISuccessResponse from '@/interfaces/ISuccessResponse'
 type loginDTO = {email: String, password: String}
 type registerDTO = {email: String, password: String}
 
-const AuthService  = {
-
+const AuthService = {
     //initial service
     login: async({email, password}: loginDTO): Promise<ISuccessResponse> => {
-        return await defaultApi.post(BASE_URL + ENDPOINT.v1.login, {email, password})
+        return await privateApi.post(BASE_URL + ENDPOINT.v1.login, {email, password})
     },
 
     register: async({email, password}: registerDTO): Promise<ISuccessResponse> => {
@@ -19,11 +18,16 @@ const AuthService  = {
     },
     
     logout: async() => {
-        return await defaultApi.delete(BASE_URL + ENDPOINT.v1.register)
+        return await privateApi.delete(BASE_URL + ENDPOINT.v1.logout)
     },
 
     refreshToken: async() => {
-        return await privateApi.post(BASE_URL + ENDPOINT.v1.refreshToken)
+        const res = await privateApi.post(BASE_URL + ENDPOINT.v1.refreshToken)
+        return res
+    },
+
+    verifyAccount: async(data : {email: string, token: string}) => {
+        return await defaultApi.put(BASE_URL + ENDPOINT.v1.verifyAccount, data)
     }
 }
 

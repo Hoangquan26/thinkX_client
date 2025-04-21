@@ -2,7 +2,7 @@ import RoundedButton from '@/components/buttons/RoundedButton/RoundedButton';
 import styles from './styles.module.scss';
 import { useFormik } from 'formik';
 import CommonInput from '@/components/Inputs/Common.Input/Common.Input';
-import { Link } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import { loginValidatorSchema } from '@/common/validators/login.validator.schema';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
@@ -10,17 +10,20 @@ import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import ErrorLabel from '@/components/ErrorLabel/ErrorLabel';
 import { LoginConst } from './constants/Login.contants';
-import AuthService from '@/services/auth.service';
-import { StatusCodes } from '@/common/statusCodes/httpStatusCode';
 import { useDispatch } from 'react-redux';
-import { setAuth } from '@/store/features/auth/auth.slice';
-import ISuccessResponse from '@/interfaces/ISuccessResponse';
-import { toast } from 'react-toastify';
+import { login } from '@/store/features/auth/auth.slice';
+import { AppDispatch } from '@/store/store';
 import { routerConfig } from '@/configs/router.config';
-import { SuccessToast } from '@/utils/toastify.util';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  const {verifiedEmail, registeredEmail} = Object.fromEntries([...searchParams])
 
   const { container, contentWrapper, actionWrapper, mainGroup, moreGroup, moreTitle,
     forgotPasswordWrapper, rememberWrapper, seperator, seperatorWrapper, seperatorTitle } = styles;
@@ -34,20 +37,18 @@ export default function LoginPage() {
     validationSchema: loginValidatorSchema,
     onSubmit: async(values) => {
       const {email, password} = values
-      const response = await AuthService.login({email, password})
-      if(response.status == StatusCodes.OK) {
-        //set user state
-        const {_id: userId, role: roles, email} = response?.metadata?.user
-        const { accessToken } = response?.metadata?.tokens
-        const message = response.message
-        dispatch(setAuth({
-          userId, roles, email, authentication: accessToken
-        }))
-        //show toast
-        SuccessToast(message)
-
-        //navigate to home
-      }
+      toast.promise(dispatch(login({
+        email,
+        password
+      })), {
+        loading: 'Logging in...',
+        success: (res) => {
+          setTimeout(() => {
+            navigate('/')
+          }, 1000)
+          return 'Login successful'
+        }
+      })
     }
   });
 
@@ -55,6 +56,30 @@ export default function LoginPage() {
     <div className={container}>
       <div className={contentWrapper}>
         {/* BUTTON GROUP */}
+        {
+          registeredEmail && <>
+            <Alert variant="destructive" className=' mb-8 border-red-400'>
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>{registeredEmail} have been registered</AlertTitle>
+              <AlertDescription>
+                Please check and verify your account before logging in!
+              </AlertDescription>
+            </Alert>
+          </>
+        }
+
+        {
+          verifiedEmail && <>
+            <Alert variant="default" className=' mb-8 border-blue-300'>
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle className=' text-blue-400'>{verifiedEmail} have been verified</AlertTitle>
+              <AlertDescription className=' text-blue-400'>
+                Now you can login to enjoy our service! Have a good day!
+              </AlertDescription>
+            </Alert>
+          </>
+        }
+
         <div className={actionWrapper}>
           <RoundedButton icon={<FcGoogle/>} content={LoginConst.actionWrapper.loginWithGoogle.eng} />
           <RoundedButton icon={<FaFacebook className=' text-[#0165E1]'/>} content={LoginConst.actionWrapper.loginWithFacebook.eng} />

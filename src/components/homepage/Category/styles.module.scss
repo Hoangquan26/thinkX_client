@@ -4,26 +4,5 @@
 $default-container-width: 100%;
 
 .container {
-    width: $default-container-width;
-    padding: variable.$padding-y-section 0;
-    padding-bottom: variable.$padding-bottom-section;
-    @include mixin.flexCommon();
-    .contentWrapper {
-        width: variable.$container-width-large-desktop;
-    
-        .title {
-            text-align: center;
-            font-size: variable.$xx-large-font-size;
-            font-weight: variable.$bold-font-weight;
-            padding-bottom: 30px;
-            margin-bottom: variable.$margin-bottom-per-item;
-            color: variable.$text-light-mode;
-        }
-
-        .categoriesWrapper {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-    }
+    width: variable.$container-width-large-desktop;
 }

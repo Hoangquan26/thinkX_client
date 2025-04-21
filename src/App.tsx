@@ -1,5 +1,4 @@
 import './App.css'
-import React, { lazy } from 'react';
 import LayoutPage from '@/pages/layout/Layout.Page';
 import { BrowserRouter, Route, Router, Routes } from 'react-router';
 import HomePage from '@/pages/home/Home.Page';
@@ -11,15 +10,27 @@ import Terms from '@/pages/Terms/Terms';
 import Policies from '@/pages/Policies/Policies';
 import Course from '@/pages/course/Course';
 import CourseDetail from '@/pages/CourseDetail/CourseDetail';
-import CartPage from './pages/user/Cart/CartPage';
-import CheckoutPage from './pages/user/Checkout/Checkout.Page';
 import NotFoundPage from './pages/error/NotFound.Page';
 import UnauthorizationLogin from './middlewares/UnauthorizationLogin/UnauthorizationLogin';
+import Verification from './pages/auth/Verification/Verification';
+import InstructorLandingPage from './pages/InstructorRequest/InstructorLandingPage/InstructorLandingPage';
+import PermissionRoute from './middlewares/PermissionRoute/PermissionRoute';
+import AdminLayout from './pages/layout/Admin.layout';
+import UserManager from './pages/admin/UserManager/UserManager';
+import { UserRole } from './common/constants/userRole';
 import ProtectedRoute from './middlewares/ProtectedRoute/ProtectedRoute';
-import FullLayout from './admin/layouts/full/FullLayout';
-import BlankLayout from './admin/layouts/blank/BlankLayout';
-import Loadable from './admin/layouts/full/shared/loadable/Loadable';
-
+import CartPage from './pages/user/Cart/CartPage';
+import InstructorRequestWrapper from './pages/InstructorRequest/InstructorRequestWrapper/InstructorRequestWrapper';
+import CheckoutPage from './pages/user/Checkout/Checkout.Page';
+import InstructorManager from './pages/admin/InstructorManager/InstructorManager';
+import InstructorLayout from './pages/layout/Instructor.layout';
+import InstructorCourseManagerPage from './pages/instructor/CourseManager/instructorCourseManagerPage';
+import LessonManagerPage from './pages/instructor/LessonManagerPage/LessonManagerPage';
+import ApproveCoursesPage from './pages/admin/ApproveCoursePage/ApproveCoursePage';
+import CourseManage from './pages/admin/CourseManage/CourseManage';
+import CategoryManagerPage from './pages/admin/CategoryManager/CategoryManagerPage';
+import LearningPage from './pages/Learningpage/LearningPage';
+import MyLearningPage from './pages/MyLearningPage/MyLearningPage';
 
 
 /*
@@ -75,17 +86,22 @@ const Router = [
 */
 
 // admin section
-const AdminDashboard = Loadable(lazy(() => import('@/admin/views/dashboards/Dashboard')));
 
-const AdminLogin = Loadable(lazy(() => import('@/admin/views/auth/login/Login')));
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={routerConfig.verification} element={<Verification/>}></Route>
         <Route path='/' element={<LayoutPage/>}>
+          <Route path={routerConfig.authenticate.user.learning} element={<LearningPage />} />
+
           <Route index element={<HomePage/>}></Route>
+          <Route path={routerConfig.courseDetail} element={<CourseDetail/>}></Route>
+
           <Route path='/' element={<LayoutUser/>}>
+          <Route path={routerConfig.instructor} element={<InstructorLandingPage/>}></Route>
+
             {/* if login return home by UnauthorizationLogin */}
             <Route element={<UnauthorizationLogin/>}>
               <Route path={routerConfig.login} element={<LoginPage/>}></Route>
@@ -96,25 +112,38 @@ function App() {
             <Route path={routerConfig.course} element={<Course/>}></Route>
             <Route path={routerConfig.courseDetail} element={<CourseDetail/>}></Route>
 
-            {/* Protect the route, must login to use */}
             <Route element={<ProtectedRoute/>}>
+              <Route path={routerConfig.authenticate.user.myLearning} element={<MyLearningPage />} />
+
               <Route path={routerConfig.authenticate.user.carts} element={<CartPage/>}></Route>
+              <Route path={routerConfig.authenticate.user.instructorRequest} element={<InstructorRequestWrapper/>}></Route>
               <Route path={routerConfig.authenticate.user.checkout} element={<CheckoutPage/>}></Route>
             </Route>
           </Route>
         </Route>
+        <Route element={<ProtectedRoute/>}>
+          <Route path="/instructor" element={<PermissionRoute allowedRoles={[UserRole.ADMIN, UserRole.INSTRUCTOR]} />}>
+            <Route element={<InstructorLayout />}>
+              <Route index element={<InstructorCourseManagerPage />} /> {/* 👈 Trang mặc định */}
+              <Route path={routerConfig.instructorCourses} element={<InstructorCourseManagerPage />} />
+              <Route path={routerConfig.instructorLessons} element={<LessonManagerPage />} />
 
-        <Route path={routerConfig.admin.path}>
-          <Route path='' element={<FullLayout/>}>
-            <Route index element={<AdminDashboard/>}></Route>
+              {/* <Route path="courses" element={<InstructorCourseManagerPage />} />
+              <Route path="courses/:id/detail" element={<CourseDetailPage />} />
+              <Route path="courses/:id/edit" element={<EditCoursePage />} /> */}
+            </Route>
           </Route>
 
-          <Route path='' element={<BlankLayout/>}>
-            <Route path={routerConfig.admin.childrens.blankLayout.login} element={<AdminLogin/>}></Route>          
+          <Route path={routerConfig.admin.path} element={<PermissionRoute allowedRoles={[UserRole.ADMIN]} />}>
+            <Route element={<AdminLayout />}>
+              <Route path={routerConfig.admin.childrens.fullLayout.userManager} element={<UserManager />} />
+              <Route path={routerConfig.admin.childrens.fullLayout.instructorRequest} element={<InstructorManager />} />
+              <Route path={routerConfig.admin.childrens.fullLayout.courseRequestManager} element={<ApproveCoursesPage />} />
+              <Route path={routerConfig.admin.childrens.fullLayout.courseManager} element={<CourseManage/>} />
+              <Route path={routerConfig.admin.childrens.fullLayout.categoryManager} element={<CategoryManagerPage/>} />
+            </Route>
           </Route>
-
-          
-        </Route> 
+        </Route>
 
         <Route path='*' element={<NotFoundPage/>}></Route>
       </Routes>
