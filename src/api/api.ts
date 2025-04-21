@@ -1,46 +1,105 @@
-import HeaderConstant from "@/common/constants/headerConstant";
-import { StatusCodes } from "@/common/statusCodes/httpStatusCode";
-import { defaultApi, privateApi } from "@/configs/api.config";
-import { toast } from 'react-toastify';
-import { store } from "@/store/store";
-import { setAuth, clearState } from "@/store/features/auth/auth.slice";
+import { BASE_URL, TIMEOUT } from "@/configs/api.config";
 import AuthService from "@/services/auth.service";
-import { ErrorToast } from "@/utils/toastify.util";
+import { logout, setAccessToken } from "@/store/features/auth/auth.slice"; 
+import { RootState } from "@/store/store";
+import { Store } from "@reduxjs/toolkit";
+import axios, { AxiosResponse, HttpStatusCode } from "axios";
+import { toast } from "sonner";
 
-defaultApi.interceptors.request.use((configs) => {
-    const state = store.getState();
-    const token = state.auth.authentication;
+
+const defaultApi = axios.create({
+    baseURL: BASE_URL,
+    timeout: TIMEOUT
+})
+
+const privateApi = axios.create({
+    withCredentials: true,
+    baseURL: BASE_URL,
+    timeout: TIMEOUT
+})
+
+let isRefreshing = false;
+
+let axiosReduxStore: Store<RootState, any>;
+
+export const injectStore = (mainStore: Store<RootState>) => {
+  axiosReduxStore = mainStore;
+};
+
+defaultApi.interceptors.request.use(
+  (config) => {
+    const token = axiosReduxStore.getState().auth.accessToken;
     if (token) {
-        configs.headers[HeaderConstant.AUTHORIZATION] = `Bearer ${token}`;
+      config.headers["x-authorization"] = `${token}`;
     }
-    return configs;
-});
-
-defaultApi.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const originalRequest = error.config;
-        if (error.response.status === StatusCodes.GONE && !originalRequest._retry) {
-            originalRequest._retry = true;
-            try {
-                const newToken = await AuthService.refreshToken();
-                originalRequest.headers[HeaderConstant.AUTHORIZATION] = `Bearer ${newToken}`;
-                return defaultApi(originalRequest);
-            } catch (refreshError) {
-                store.dispatch(clearState());
-                const message = "Session expired! Please login again"
-                ErrorToast(message)
-            }
-        } else if (error.response.status > 299) {
-            const message = error.response.data?.message ?? error.response.statusText;
-            console.log(message)
-            ErrorToast(message)
-        }
-        return Promise.reject(error);
-    }
+    return config;
+  },
+  (error) => Promise.reject(error)
 );
 
-export {
-    defaultApi,
-    privateApi
-};
+let refreshTokenPromise : Promise<AxiosResponse> | null = null
+defaultApi.interceptors.response.use(res => res.data, 
+  async (error) => {
+    const original = error.config;
+    if (error.response?.data?.statusCode === HttpStatusCode.Unauthorized) {
+      axiosReduxStore.dispatch(logout());
+    }
+    if (error.response?.data?.statusCode === HttpStatusCode.Gone && !original._retry) {
+      original._retry = true;
+      if(!refreshTokenPromise) {
+        console.log('---get Token')
+        refreshTokenPromise = AuthService.refreshToken().then((res) => {
+          if (res) {
+            const resData = res.data.metadata.tokens.accessToken
+            console.log('---have Token')
+
+            console.log(resData)
+            axiosReduxStore.dispatch(setAccessToken(resData))
+            return resData
+          }
+          return res;
+        })
+        .catch((err) => {
+          console.log(err)
+          axiosReduxStore.dispatch(logout());
+        })
+        .finally(() => {
+          refreshTokenPromise = null;
+        })
+      }
+    }
+
+    const message =
+    error.response?.data?.message || "Đã xảy ra lỗi, vui lòng thử lại.";
+    toast.error(message);
+
+    console.log(message)
+    return Promise.reject(error);
+  }
+)
+
+privateApi.interceptors.request.use(
+  (config) => {
+    const token = axiosReduxStore.getState().auth.accessToken;
+    if (token) {
+      config.headers["x-authorization"] = `${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+
+privateApi.interceptors.response.use(res => res.data,
+  async (error) => {
+    const message =
+    error.response?.data?.message || "Đã xảy ra lỗi, vui lòng thử lại.";
+    toast.error(message);
+    console.log(message)
+  }
+)
+
+export{
+    privateApi,
+    defaultApi
+}

@@ -1,65 +1,127 @@
-import { useState } from 'react';
-import styles from './styles.module.scss';
-import CartItem from '@/interfaces/cart.interface';
-import CartTable from '@/components/CartTable/CartTable';
-import { cartColumns } from '@/components/CartTable/CartColumn';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import RoundedButton from '@/components/buttons/RoundedButton/RoundedButton';
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
-import classNames from 'classnames';
-
-const initialCartItems: CartItem[] = [
-  { id: 1, thumbnail: 'https://th.bing.com/th/id/OIP.pKHrMrDFDljIqlZLSJG7lgHaD4?rs=1&pid=ImgDetMain', product: 'Product 1', unitPrice: 10, quantity: 2 },
-  { id: 2, thumbnail: 'https://th.bing.com/th/id/OIP.pKHrMrDFDljIqlZLSJG7lgHaD4?rs=1&pid=ImgDetMain', product: 'Product 2', unitPrice: 20, quantity: 1 },
-  { id: 3, thumbnail: 'https://th.bing.com/th/id/OIP.pKHrMrDFDljIqlZLSJG7lgHaD4?rs=1&pid=ImgDetMain', product: 'Product 3', unitPrice: 15, quantity: 3 },
-];
+import { useEffect, useState } from "react";
+import { ICourse } from "@/interfaces/course.interface";
+import { cartService } from "@/services/cart.service";
+import { toast } from "sonner";
+import styles from "./styles.module.scss";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import classNames from "classnames";
+import { routerConfig } from "@/configs/router.config";
+import { useNavigate } from "react-router";
 
 export default function CartPage() {
   const { container, contentWrapper, tableWrapper, checkoutWrapper, totalWrapper } = styles;
-  const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
+  const navigate = useNavigate(); 
+  const [cartItems, setCartItems] = useState<ICourse[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const calculateTotal = (unitPrice: number, quantity: number) => {
-    return unitPrice * quantity;
+  const fetchCartDetail = async () => {
+    try {
+      const res = await cartService.getCartAmount();
+      setCartItems(res.metadata?.cartItems || []);
+      setTotalPrice(res.metadata?.totalPrice || 0);
+    }
+    finally{
+      setLoading(false);
+    }
   };
 
-  const calculateGrandTotal = () => {
-    return cartItems.reduce((total, item) => total + calculateTotal(item.unitPrice, item.quantity), 0);
-  };
-
-
+  useEffect(() => {
+    fetchCartDetail();
+  }, []);
 
   return (
     <div className={container}>
       <div className={contentWrapper}>
+        {/* CART LIST */}
         <div className={tableWrapper}>
-          <CartTable columns={cartColumns} data={cartItems} />
-        </div>
-        <div className={checkoutWrapper}>
-          <div className=' flex justify-between items-start'>
-            <div className="flex w-full max-w-sm items-center space-x-2">
-              <Input className=' pt-4 pb-4' type="text" placeholder="Email" />
-              <Button variant={'default'} className=' cursor-pointer'>APPLY COUPON</Button>
+          <h2 className="text-2xl font-bold mb-6">Your Shopping Cart</h2>
+
+          {loading ? (
+            <p className="text-gray-500">Loading cart...</p>
+          ) : cartItems.length === 0 ? (
+            <p className="text-gray-500">Your cart is currently empty.</p>
+          ) : (
+            <div className="space-y-4">
+              {cartItems.map((course) => (
+                <div
+                  key={course._id}
+                  className="flex items-center gap-4 border border-gray-200 p-4 rounded-md shadow-sm"
+                >
+                  <img
+                    src={course.courseThumb}
+                    className="w-20 h-14 object-cover rounded-md"
+                    alt={course.courseName}
+                  />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-base">{course.courseName}</h3>
+                    <p className="text-sm text-muted-foreground">{course.slug}</p>
+                  </div>
+                  <div className="text-right font-semibold text-red-600 text-base">
+                    {course.coursePrice.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className={
-              classNames(totalWrapper, {
-                ' w-1/2 ml-auto': true
-              })
-            }>
-              <Table className=' border rounded-md'>
+          )}
+        </div>
+
+        {/* CHECKOUT */}
+        <div className={checkoutWrapper}>
+          <div className="flex justify-between items-start flex-col sm:flex-row gap-4">
+            {/* Coupon Input (Disabled) */}
+            <div className="flex w-full max-w-sm items-center space-x-2">
+              <Input
+                className="pt-4 pb-4"
+                type="text"
+                placeholder="Enter coupon code (Coming soon)"
+                disabled
+              />
+              <Button variant="outline" className="cursor-not-allowed" disabled>
+                Apply
+              </Button>
+            </div>
+
+            {/* Summary */}
+            <div
+              className={classNames(totalWrapper, {
+                "w-full sm:w-1/2": true,
+              })}
+            >
+              <Table className="border rounded-md mb-4">
                 <TableBody>
                   <TableRow>
-                      <TableCell>SubTotal</TableCell>
-                      <TableCell></TableCell>
+                    <TableCell>Subtotal</TableCell>
+                    <TableCell className="text-right">
+                      {totalPrice.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })}
+                    </TableCell>
                   </TableRow>
-
                   <TableRow>
-                      <TableCell>Total</TableCell>
-                      <TableCell></TableCell>
+                    <TableCell>Total</TableCell>
+                    <TableCell className="text-right font-bold text-red-600">
+                      {totalPrice.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })}
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-              <Button variant={'default'} className='w-full h-10 cursor-pointer'>CHECK OUT</Button>
+              <Button
+                variant="default"
+                className="w-full h-10 bg-red-600 hover:bg-red-700 text-white font-semibold"
+                onClick={() => navigate(routerConfig.authenticate.user.checkout)} 
+              >
+                Proceed to Checkout
+              </Button>
             </div>
           </div>
         </div>

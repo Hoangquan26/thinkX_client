@@ -8,8 +8,8 @@ export interface CourseSectionInterface {
 
 export const courseConstant: CourseSectionInterface = {
     title: {
-        eng: 'Browser By Categories',
-        vn: 'Tìm kiếm bằng danh mục'
+        eng: 'Newest Course',
+        vn: 'Khóa học mới nhất'
     },
     courseItems: [
         {

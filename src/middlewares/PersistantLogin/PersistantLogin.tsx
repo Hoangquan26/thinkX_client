@@ -8,7 +8,7 @@ import { AppDispatch } from "@/store/store";
 export default function PersistantLogin() {
     const accessToken = useSelector(selectAuthentication);
     const dispatch = useDispatch<AppDispatch>();
-    const refresh = useRefreshToken();
+    const {refresh} = useRefreshToken();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

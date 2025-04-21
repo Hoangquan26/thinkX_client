@@ -1,7 +1,7 @@
 import { signupValidator } from "@/common/validators/signup.validator.schema";
 import { useFormik } from "formik";
 import styles from './styles.module.scss'
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import CommonInput from "@/components/Inputs/Common.Input/Common.Input";
 import { Checkbox } from "@/components/ui/checkbox";
 import RoundedButton from "@/components/buttons/RoundedButton/RoundedButton";
@@ -13,8 +13,8 @@ import { RegisterConst } from "./constants/Register.constant";
 import AuthService from "@/services/auth.service";
 import { StatusCodes } from "@/common/statusCodes/httpStatusCode";
 import { useDispatch } from "react-redux";
-import { ErrorToast, SuccessToast } from "@/utils/toastify.util";
 import { routerConfig } from "@/configs/router.config";
+import { toast } from "sonner";
 export default function RegisterPage() {
   const { 
     container, contentWrapper, 
@@ -38,15 +38,21 @@ export default function RegisterPage() {
     validationSchema: signupValidator,
     onSubmit: async(values) => {
       const { email, password } = values;
-      const response = await AuthService.register({ email, password });    
-      if (response?.status === StatusCodes.CREATED) {
-        const message = response.message ?? "Success";
-        SuccessToast(message);
-  
-        setTimeout(() => {
-          navigate(routerConfig.login);
-        }, 3000);  
-      } }
+      toast.promise(AuthService.register({ email, password }), {
+        loading: "Registration is on progress",
+        success: (response) => {
+          if (response?.status === StatusCodes.CREATED) {
+            setTimeout(() => {
+              navigate(routerConfig.getLoginRegistered(email))
+            }, 1000) 
+            return "Registor successful" 
+          } else {
+            throw new Error("Registor error!")
+          }
+        },
+        error: (err) => err?.response?.data?.message || "Đăng ký thất bại!",
+      })      
+      }
     });
 
   console.log(formik)
